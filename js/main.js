@@ -32,8 +32,8 @@ const createResultString = (key, displayedNum, state) => {
     const keyType = getKeyType(key)
     const {
         firstValue,
-        modValue,
         operator,
+        modValue,
         previousKeyType
     } = state
 
@@ -48,14 +48,13 @@ const createResultString = (key, displayedNum, state) => {
 
     //hits decimal
     if (keyType === 'decimal') {
-        if  (displayedNum.includes('.')) return displayedNum + '.'
+        if  (!displayedNum.includes('.')) return displayedNum + '.'
         if (previousKeyType === 'operator' || previousKeyType === 'calculate') return '0.'
         return displayedNum 
     }
 
     //hits operator
     if (keyType === 'operator') {
-
         return firstValue &&
             operator &&
             previousKeyType !== 'operator' &&
@@ -105,7 +104,7 @@ const updateCalculatorState = (key, calculator, calculatedValue, displayedNum) =
             : displayedNum
     }
 
-    if (keyType === 'clear' &&key.textContent === 'AC') {
+    if (keyType === 'clear' && key.textContent === 'AC') {
             calculator.dataset.firstValue = ''
             calculator.dataset.modValue = ''
             calculator.dataset.operator = ''
@@ -136,7 +135,7 @@ const keys = calculator.querySelector('.calculator__keys');
 const display = document.querySelector('.calculator__display');
 
 keys.addEventListener('click', e => {
-    if (e.target.matches('button')) return
+    if (!e.target.matches('button')) return
     const key = e.target
     const displayedNum = display.textContent
 
